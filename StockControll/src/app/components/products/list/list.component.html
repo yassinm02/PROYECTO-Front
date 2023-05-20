@@ -1,0 +1,45 @@
+<div class="m-1" >
+<h2>LISTA DE PRODUCTOS</h2>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prod of products">
+      <td>{{ prod.id }}</td>
+      <td>{{ prod.name }}</td>
+      <td>{{ prod.cantidad }}</td>
+      <td>{{ prod.descripcion }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="editProduct(prod.id)"><i class="fa fa-pen" style="color: #005eff;"></i></button>
+        <button class="btn btn-danger" (click)="deleteProduct(prod.id)"><i class="fa fa-xmark" style="color: #ff0000;"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav aria-label="Pagination">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="actualPage === 0">
+      <a class="page-link" (click)="changePage(actualPage - 1)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" [class.active]="pagina === actualPage" *ngFor="let pagina of totalPages">
+      <a class="page-link" (click)="changePage(pagina)" *ngIf="pagina >= actualPage - 5 && pagina <= actualPage + 5">{{ pagina + 1 }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
+      <a class="page-link" (click)="changePage(actualPage + 1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
