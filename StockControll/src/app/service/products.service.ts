@@ -26,5 +26,9 @@ export class ProductsService {
     return this.httpClient.get<Page<Product>>(this.productURL+"/list", { params });
   }
 
+  public deleteById(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.productURL + "/" + id);
+  }
+
 
 }

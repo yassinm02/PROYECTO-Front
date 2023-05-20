@@ -1,0 +1,20 @@
+<div class="modal-content">
+<h2 mat-dialog-title class="modal-title modal-content">Detalles del Producto</h2>
+<div mat-dialog-content class="modal-content">
+  <p><strong>ID:</strong> {{ product.id }}</p>
+  <p><strong>Nombre:</strong> {{ product.name }}</p>
+  <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
+  <p><strong>Marca:</strong> {{ product.marca }}</p>
+  <p><strong>Cantidad:</strong> {{ product.cantidad }}</p>
+  <p><strong>Estado:</strong> {{ product.estado }}</p>
+  <p><strong>Precio Base:</strong> {{ product.precioBase }}</p>
+  <p><strong>Tipo de IVA:</strong> {{ product.tipoIva }}</p>
+  <p><strong>Fecha de Creación:</strong> {{ product.fechaCreacion }}</p>
+  <p><strong>Proveedor:</strong> {{ product.proveedor }}</p>
+  <p><strong>Imagen:</strong> {{ product.imagen }}</p>
+  <p><strong>Código de Barras:</strong> {{ product.codBarras }}</p>
+</div>
+<div mat-dialog-actions class="modal-footer">
+  <button mat-flat-button class="btn btn-danger" mat-dialog-close>Close</button>
+</div>
+</div>

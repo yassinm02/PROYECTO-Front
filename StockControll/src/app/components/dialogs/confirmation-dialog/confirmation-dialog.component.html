@@ -1,0 +1,10 @@
+<div class="modal-content">
+<h1 mat-dialog-title class="modal-title">Confirmación</h1>
+<div mat-dialog-content class="modal-content">
+  <p class="modal-text">{{ mensaje }}</p>
+</div>
+<div mat-dialog-actions class="modal-footer">
+  <button mat-raised-button class="btn btn-secondary" (click)="closeDialog()">No</button>
+  <button mat-raised-button class="btn btn-danger" (click)="confirm()" cdkFocusInitial>Sí</button>
+</div>
+</div>
