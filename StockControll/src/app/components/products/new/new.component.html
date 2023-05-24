@@ -1,1 +1,104 @@
-<p>new works!</p>
+<div class="modal-content">
+  <h2 class="modal-title">Crear Producto</h2>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Nombre:</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="submitted && f['name']?.errors?.required">
+          Indica un nombre
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Descripción:</mat-label>
+        <input matInput formControlName="descripcion" required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Marca:</mat-label>
+        <input matInput formControlName="marca">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Cantidad:</mat-label>
+        <input matInput type="number" formControlName="cantidad" required>
+        <mat-error *ngIf="submitted && f['cantidad']?.errors">
+          <span *ngIf="f['cantidad']?.errors?.required">La cantidad no puede estar vacía</span>
+          <span *ngIf="f['cantidad']?.errors?.min">No puede ser menor que 0</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Estado:</mat-label>
+        <input matInput formControlName="estado" required>
+        <mat-error *ngIf="submitted && f['estado']?.errors?.required">
+          El estado se debe especificar
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Precio Base:</mat-label>
+        <input matInput type="number" formControlName="precioBase" required>
+        <mat-error *ngIf="submitted && f['precioBase']?.errors">
+          <span *ngIf="f['precioBase']?.errors?.required">Indica un precio base</span>
+          <span *ngIf="f['precioBase']?.errors?.min">Precio no puede ser menor que 0</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Tipo de IVA:</mat-label>
+        <mat-select formControlName="tipoIva" required>
+          <mat-option *ngFor="let tipoIva of tiposIva" [value]="tipoIva">
+            {{ tipoIva.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f['tipoIva']?.errors?.required">
+          Indica un tipo de IVA
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Proveedor:</mat-label>
+        <mat-select formControlName="proveedor" required>
+          <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor">
+            {{ proveedor.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f['proveedor']?.errors?.required">
+          Indica un proveedor
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Código de Barras:</mat-label>
+        <input matInput formControlName="codBarras" required minlength="8">
+        <mat-error *ngIf="submitted && f['codBarras']?.errors">
+          <span *ngIf="f['codBarras']?.errors?.required">Indica un código de barras</span>
+          <span *ngIf="f['codBarras']?.errors?.minlength">Debe tener al menos 8 caracteres</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button mat-button type="button" (click)="onCancel()" class="btn btn-danger">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" class="btn btn-primary">Crear Producto</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,55 @@
+
+
+  <div class="modal-content">
+    <h2 class="modal-title">Editar Producto</h2>
+    <div class="modal-content">
+      <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+        <div class="form-group">
+          <label for="name">Nombre:</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="editedProduct.name" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción:</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="editedProduct.descripcion" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="marca">Marca:</label>
+          <input type="text" class="form-control" id="marca" name="marca" [(ngModel)]="editedProduct.marca" required>
+        </div>
+        <div class="form-group">
+          <label for="cantidad">Cantidad:</label>
+          <input type="number" class="form-control" id="cantidad" name="cantidad" [(ngModel)]="editedProduct.cantidad" required>
+        </div>
+        <div class="form-group">
+          <label for="estado">Estado:</label>
+          <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="editedProduct.estado" required>
+        </div>
+        <div class="form-group">
+          <label for="precioBase">Precio Base:</label>
+          <input type="number" class="form-control" id="precioBase" name="precioBase" [(ngModel)]="editedProduct.precioBase" required>
+        </div>
+        <div class="form-group">
+          <label for="tipoIva">Tipo de IVA:</label>
+          <select class="form-control" id="tipoIva" name="tipoIva" [(ngModel)]="editedProduct.tipoIva" required>
+            <option *ngFor="let taxType of taxTypes" [value]="taxType">{{ taxType.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="proveedor">Proveedor:</label>
+          <select class="form-control" id="proveedor" name="proveedor" [(ngModel)]="editedProduct.proveedor" required>
+            <option *ngFor="let provider of providers" [value]="provider">{{ provider.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="codBarras">Código de Barras:</label>
+          <input type="text" class="form-control" id="codBarras" name="codBarras" [(ngModel)]="editedProduct.codBarras" required>
+        </div>
+      
+        <div mat-dialog-actions class="modal-footer">
+          <button mat-flat-button class="btn btn-danger" mat-dialog-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

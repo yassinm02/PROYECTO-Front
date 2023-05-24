@@ -1,0 +1,43 @@
+
+  .modal-dialog {
+    max-width: 500px;
+  }
+  
+  .modal-content {
+    overflow-y: auto;
+    max-height: 80vh;
+    margin: 0 auto;
+    background-color: #DDD0C8;
+
+    padding: 20px;
+  }
+  
+  .modal-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    width: 100%;
+  }
+  
+  .modal-footer {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .btn-secondary {
+    background-color: gray;
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: blue;
+    color: white;
+  }
+  

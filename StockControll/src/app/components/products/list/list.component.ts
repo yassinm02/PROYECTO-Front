@@ -4,6 +4,8 @@ import { Product } from 'src/app/model/product.model';
 import { ProductsService } from 'src/app/service/products.service';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { InfoDialogComponent } from '../../dialogs/info-dialog/info-dialog.component';
+import { EditDialogComponent } from '../../dialogs/edit-dialog/edit-dialog.component';
+import { NewComponent } from '../new/new.component';
 
 
 @Component({
@@ -16,6 +18,7 @@ export class ListComponent implements OnInit {
   products: Product[] = [];
   actualPage: number = 0;
   totalPages:  number[] = [];
+  searchTerm: string = '';
 
   constructor(private productService: ProductsService,
     public dialog: MatDialog) {}
@@ -25,7 +28,7 @@ export class ListComponent implements OnInit {
   }
 
   getProducts(): void {
-    this.productService.getProductPaginated(this.actualPage, 10)
+    this.productService.getProductPaginated(this.actualPage, 10, this.searchTerm)
           .subscribe(data => {
           this.products = data.content;
           this.totalPages = Array.from({length: data.totalPages}, (_, i) => i);
@@ -52,8 +55,10 @@ export class ListComponent implements OnInit {
     });
   }
 
-  editProduct(id:number) : void{
-
+  editProduct(product: Product) : void{
+    this.dialog.open(EditDialogComponent, {
+      data: product
+    });
   }
 
   opneInfoDialog(product: Product): void {
@@ -62,7 +67,17 @@ export class ListComponent implements OnInit {
     });
   }
 
+  searchProducts(term: string): void {
+    this.searchTerm = term;
+    this.getProducts();
+  }
+  handleSearch(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement).value;
+    this.searchProducts(searchTerm);
+  }
 
-
+  addProduct(){
+    this.dialog.open(NewComponent, {});
+  }
 
 }

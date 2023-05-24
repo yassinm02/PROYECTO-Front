@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Product } from '../model/product.model';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Page } from './page';
 
 
@@ -18,10 +18,12 @@ export class ProductsService {
     return this.httpClient.get<Product[]>(this.productURL);
   }
 
-  getProductPaginated(page: number, size: number): Observable<Page<Product>> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
+  getProductPaginated(page: number, size: number, searchTerm: string): Observable<Page<Product>> {
+    const params = {
+      page: page.toString(),
+      size: size.toString(),
+      searchTerm: searchTerm
+    };
 
     return this.httpClient.get<Page<Product>>(this.productURL+"/list", { params });
   }
@@ -30,5 +32,29 @@ export class ProductsService {
     return this.httpClient.delete<any>(this.productURL + "/" + id);
   }
 
+  public editProduct(id: number, producto: Product): Observable<any> {
+    const url = this.productURL + "/" + id;
+    return this.httpClient.put(url, producto);
+  }
+
+  createProduct(producto: Product): Observable<string> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post<string>(`${this.productURL}/create`, producto, { headers: headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'Error al crear el producto';
+    if (error.error instanceof ErrorEvent) {
+      // Error de cliente
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Error del servidor
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
+  }
 
 }

@@ -1,48 +1,64 @@
-<div class="m-1" >
-<h2>LISTA DE PRODUCTOS</h2>
+<div class="m-1">
+  <h2>LISTA DE PRODUCTOS</h2>
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Acciones</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col" class="d-none d-sm-table-cell">Descripcion</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let prod of products" >
-      <td>{{ prod.id }}</td>
-      <td>
-        <div class="container">
-        <button class="btn btn-primary" (click)="editProduct(prod.id)"><mat-icon>edit</mat-icon></button>
-        <button class="btn btn-danger" (click)="deleteProduct(prod.id)"><mat-icon>delete_forever</mat-icon></button>
-        <button class="btn btn-primary"  (click)="opneInfoDialog(prod)"><mat-icon>info</mat-icon></button>
-        </div>
-      </td>
-      <td>{{ prod.name }}</td>
-      <td>{{ prod.cantidad }}</td>
-      <td class="d-none d-sm-table-cell">{{ prod.descripcion }}</td>
-    </tr>
-  </tbody>
-</table>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="form-group pt-3">
+      <input type="text" class="form-control" placeholder="Buscar por nombre" (input)="handleSearch($event)" />
+    </div>
+    <button class="btn btn-success boton" (click)="addProduct()">
+      Añadir producto<i class="material-icons">fiber_new</i>
+    </button>
+  </div>
 
-<nav aria-label="Pagination">
-  <ul class="pagination">
-    <li class="page-item" [class.disabled]="actualPage === 0">
-      <a class="page-link" (click)="changePage(actualPage - 1)" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item" [class.active]="pagina === actualPage" *ngFor="let pagina of totalPages">
-      <a class="page-link" (click)="changePage(pagina)" *ngIf="pagina >= actualPage - 5 && pagina <= actualPage + 5">{{ pagina + 1 }}</a>
-    </li>
-    <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
-      <a class="page-link" (click)="changePage(actualPage + 1)" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="m-3">id</th>
+        <th scope="col">Acciones</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col" class="d-none d-sm-table-cell">Descripcion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of products">
+        <td class="m-3">{{ prod.id }}</td>
+        <td>
+          <div class="container">
+            <button class="btn-primary btnico" (click)="editProduct(prod)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn-danger btnico" (click)="deleteProduct(prod.id)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+            <button class="btn-primary btnico" (click)="opneInfoDialog(prod)">
+              <mat-icon>info</mat-icon>
+            </button>
+          </div>
+        </td>
+        <td>{{ prod.name }}</td>
+        <td>{{ prod.cantidad }}</td>
+        <td class="d-none d-sm-table-cell">{{ prod.descripcion }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Pagination">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="actualPage === 0">
+        <a class="page-link" (click)="changePage(actualPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" [class.active]="pagina === actualPage" *ngFor="let pagina of totalPages">
+        <a class="page-link" (click)="changePage(pagina)"
+          *ngIf="pagina >= actualPage - 5 && pagina <= actualPage + 5">{{ pagina + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
+        <a class="page-link" (click)="changePage(actualPage + 1)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>

@@ -1,0 +1,51 @@
+.modal-dialog {
+  max-width: 500px;
+}
+
+.modal-content {
+  overflow-y: auto;
+  max-height: 80vh;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #DDD0C8;
+
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.modal-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.btn-danger {
+  background-color: red;
+  color: white;
+}
+
+.btn-primary {
+  background-color: blue;
+  color: white;
+}
+
+
+
+
