@@ -1,55 +1,107 @@
-
-
+<div class="modal-content">
+  <h2 class="modal-title">Editar Producto</h2>
   <div class="modal-content">
-    <h2 class="modal-title">Editar Producto</h2>
-    <div class="modal-content">
-      <form (ngSubmit)="saveProduct()" #productForm="ngForm">
-        <div class="form-group">
-          <label for="name">Nombre:</label>
-          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="editedProduct.name" required>
-        </div>
-        <div class="form-group">
-          <label for="description">Descripción:</label>
-          <textarea class="form-control" id="description" name="description" [(ngModel)]="editedProduct.descripcion" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="marca">Marca:</label>
-          <input type="text" class="form-control" id="marca" name="marca" [(ngModel)]="editedProduct.marca" required>
-        </div>
-        <div class="form-group">
-          <label for="cantidad">Cantidad:</label>
-          <input type="number" class="form-control" id="cantidad" name="cantidad" [(ngModel)]="editedProduct.cantidad" required>
-        </div>
-        <div class="form-group">
-          <label for="estado">Estado:</label>
-          <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="editedProduct.estado" required>
-        </div>
-        <div class="form-group">
-          <label for="precioBase">Precio Base:</label>
-          <input type="number" class="form-control" id="precioBase" name="precioBase" [(ngModel)]="editedProduct.precioBase" required>
-        </div>
-        <div class="form-group">
-          <label for="tipoIva">Tipo de IVA:</label>
-          <select class="form-control" id="tipoIva" name="tipoIva" [(ngModel)]="editedProduct.tipoIva" required>
-            <option *ngFor="let taxType of taxTypes" [value]="taxType">{{ taxType.name }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="proveedor">Proveedor:</label>
-          <select class="form-control" id="proveedor" name="proveedor" [(ngModel)]="editedProduct.proveedor" required>
-            <option *ngFor="let provider of providers" [value]="provider">{{ provider.name }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="codBarras">Código de Barras:</label>
-          <input type="text" class="form-control" id="codBarras" name="codBarras" [(ngModel)]="editedProduct.codBarras" required>
-        </div>
-      
-        <div mat-dialog-actions class="modal-footer">
-          <button mat-flat-button class="btn btn-danger" mat-dialog-close>Cancelar</button>
-          <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Guardar</button>
-        </div>
-      </form>
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()" #productFormDirective="ngForm">
+      <div class="form-group">
+        <mat-form-field> 
+        <mat-label>Nombre:</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="submitted && f['name']?.errors?.required">
+          Indica un nombre
+        </mat-error>
+        </mat-form-field>
     </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Descripción:</mat-label>
+        <textarea matInput formControlName="descripcion" required cdkTextareaAutosize #autosize></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Marca:</mat-label>
+        <input matInput formControlName="marca">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Cantidad:</mat-label>
+        <input matInput type="number" formControlName="cantidad" required>
+        <mat-error *ngIf="submitted && f['cantidad']?.errors">
+          <span *ngIf="f['cantidad']?.errors?.required">La cantidad no puede estar vacía</span>
+          <span *ngIf="f['cantidad']?.errors?.min">No puede ser menor que 0</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Estado:</mat-label>
+        <input matInput formControlName="estado" required>
+        <mat-error *ngIf="submitted && f['estado']?.errors?.required">
+          El estado se debe especificar
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Precio Base:</mat-label>
+        <input matInput type="number" formControlName="precioBase" required>
+        <mat-error *ngIf="submitted && f['precioBase']?.errors">
+          <span *ngIf="f['precioBase']?.errors?.required">Indica un precio base</span>
+          <span *ngIf="f['precioBase']?.errors?.min">Precio no puede ser menor que 0</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Tipo de IVA:</mat-label>
+        <mat-select formControlName="tipoIva" required [compareWith]="compareTaxTypes">
+          <mat-option *ngFor="let tipoIva of taxTypes" [value]="tipoIva">
+            {{ tipoIva.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f['tipoIva']?.errors?.required">
+          Indica un tipo de IVA
+        </mat-error>
+      </mat-form-field>
+    </div>
+    
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Proveedor:</mat-label>
+        <mat-select formControlName="proveedor" required [compareWith]="compareProviders">
+          <mat-option *ngFor="let proveedor of providers" [value]="proveedor">
+            {{ proveedor.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && f['proveedor']?.errors?.required">
+          Indica un proveedor
+        </mat-error>
+      </mat-form-field>
+    </div>
+    
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Código de Barras:</mat-label>
+        <input matInput formControlName="codBarras" required minlength="8">
+        <mat-error *ngIf="submitted && f['codBarras']?.errors">
+          <span *ngIf="f['codBarras']?.errors?.required">Indica un código de barras</span>
+          <span *ngIf="f['codBarras']?.errors?.minlength">Debe tener al menos 8 caracteres</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    
+      <div mat-dialog-actions class="modal-footer">
+        <button mat-flat-button class="btn btn-danger" mat-dialog-close>Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Guardar</button>
+      </div>
+    </form>
   </div>
-  
+</div>

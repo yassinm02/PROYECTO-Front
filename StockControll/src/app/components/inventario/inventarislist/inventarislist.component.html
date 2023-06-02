@@ -1,0 +1,23 @@
+
+
+
+<div class=" m-2">
+    <button class=" btn btn-success boton mb-3" (click)="abrirDialogoCrearInventario()">Crear Inventario</button>
+    <table class="table  ">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Fecha de Creación</th>
+          <th scope="col">Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inventario of inventarios" (click) = "AbrirInventario()">
+          <td>{{ inventario.id }}</td>
+          <td>{{ inventario.fechaCreacion | date }}</td>
+          <td>{{ inventario.nombre }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

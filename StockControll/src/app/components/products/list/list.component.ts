@@ -19,6 +19,8 @@ export class ListComponent implements OnInit {
   actualPage: number = 0;
   totalPages:  number[] = [];
   searchTerm: string = '';
+  pageSize: number = 10;
+
 
   constructor(private productService: ProductsService,
     public dialog: MatDialog) {}
@@ -28,7 +30,7 @@ export class ListComponent implements OnInit {
   }
 
   getProducts(): void {
-    this.productService.getProductPaginated(this.actualPage, 10, this.searchTerm)
+    this.productService.getProductPaginated(this.actualPage, this.pageSize, this.searchTerm)
           .subscribe(data => {
           this.products = data.content;
           this.totalPages = Array.from({length: data.totalPages}, (_, i) => i);
@@ -55,10 +57,20 @@ export class ListComponent implements OnInit {
     });
   }
 
-  editProduct(product: Product) : void{
-    this.dialog.open(EditDialogComponent, {
+  editProduct(product: Product): void {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
       data: product
     });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      this.getProducts();
+      window.location.reload();
+    });
+  }
+  
+  changePageSize(newPageSize: number): void {
+    this.pageSize = newPageSize;
+    this.changePage(0);
   }
 
   opneInfoDialog(product: Product): void {

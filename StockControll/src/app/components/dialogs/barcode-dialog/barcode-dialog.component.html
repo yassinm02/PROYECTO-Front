@@ -1,0 +1,9 @@
+<mat-dialog-content>
+    <div class="barcode-container">
+      <img [src]="'https://barcodeapi.org/api/codabar/' + data" alt="Código de Barras" class="barcode-image">
+    </div>
+    <div mat-dialog-actions class="modal-footer">
+      <button mat-raised-button class="btn btn-secondary" (click)="closeDialog()">CERRAR</button>
+    </div>
+  </mat-dialog-content>
+  

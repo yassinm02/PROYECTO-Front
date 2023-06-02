@@ -1,4 +1,4 @@
-<div class="m-1">
+<div class="m-2">
   <h2>LISTA DE PRODUCTOS</h2>
 
   <div class="d-flex justify-content-between align-items-center mb-3">
@@ -10,55 +10,83 @@
     </button>
   </div>
 
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="m-3">id</th>
-        <th scope="col">Acciones</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col" class="d-none d-sm-table-cell">Descripcion</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let prod of products">
-        <td class="m-3">{{ prod.id }}</td>
-        <td>
-          <div class="container">
-            <button class="btn-primary btnico" (click)="editProduct(prod)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button class="btn-danger btnico" (click)="deleteProduct(prod.id)">
-              <mat-icon>delete_forever</mat-icon>
-            </button>
-            <button class="btn-primary btnico" (click)="opneInfoDialog(prod)">
-              <mat-icon>info</mat-icon>
-            </button>
-          </div>
-        </td>
-        <td>{{ prod.name }}</td>
-        <td>{{ prod.cantidad }}</td>
-        <td class="d-none d-sm-table-cell">{{ prod.descripcion }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="products">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th class="m-3">id</th>
+          <th scope="col">Acciones</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col" class="d-none d-sm-table-cell">Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of products">
+          <td class="m-3">{{ prod.id }}</td>
+          <td>
+            <div class="container">
+              <button class="btn-primary btnico" (click)="editProduct(prod)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="btn-danger btnico" (click)="deleteProduct(prod.id)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+              <button class="btn-primary btnico" (click)="opneInfoDialog(prod)">
+                <mat-icon>info</mat-icon>
+              </button>
+            </div>
+          </td>
+          <td>{{ prod.name }}</td>
+          <td>{{ prod.cantidad }}</td>
+          <td class="d-none d-sm-table-cell">{{ prod.descripcion }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <nav aria-label="Pagination">
-    <ul class="pagination">
-      <li class="page-item" [class.disabled]="actualPage === 0">
-        <a class="page-link" (click)="changePage(actualPage - 1)" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item" [class.active]="pagina === actualPage" *ngFor="let pagina of totalPages">
-        <a class="page-link" (click)="changePage(pagina)"
-          *ngIf="pagina >= actualPage - 5 && pagina <= actualPage + 5">{{ pagina + 1 }}</a>
-      </li>
-      <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
-        <a class="page-link" (click)="changePage(actualPage + 1)" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+    <div class="mt-auto container align-items-center">
+      <div class="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-center">
+        <div class="form-group pt-3 pr-3">
+          <label for="pageSizeSelect">Elementos por página:</label>
+          <select class="form-control" id="pageSizeSelect" [(ngModel)]="pageSize" (ngModelChange)="changePageSize($event)">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="form-group pt-3">
+          <label for="pageSizeSelect">Páginas:</label>
+          <nav aria-label="Pagination">
+            <ul class="pagination">
+              <li class="page-item" [class.disabled]="actualPage === 0">
+                <a class="page-link" (click)="changePage(0)" aria-label="First">
+                  <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item" [class.disabled]="actualPage === 0">
+                <a class="page-link" (click)="changePage(actualPage - 1)" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item" [class.active]="pagina === actualPage" *ngFor="let pagina of totalPages">
+                <a class="page-link" (click)="changePage(pagina)"
+                  *ngIf="pagina >= actualPage - 5 && pagina <= actualPage + 5">{{ pagina + 1 }}</a>
+              </li>
+              <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
+                <a class="page-link" (click)="changePage(actualPage + 1)" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li class="page-item" [class.disabled]="actualPage === totalPages.length - 1">
+                <a class="page-link" (click)="changePage(totalPages.length - 1)" aria-label="Last">
+                  <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

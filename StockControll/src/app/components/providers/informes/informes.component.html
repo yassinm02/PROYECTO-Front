@@ -1,0 +1,24 @@
+<div class="container main-container">
+    <h2 class="title">Informes</h2>
+  
+    <div class="button-container">
+      <button class="btn btn-primary" (click)="downloadPdfProducto()">Descargar PDF productos</button>
+      <hr class="line" />
+      <button class="btn btn-primary" (click)="downloadPdfProveedor()">Descargar PDF proveedores</button>
+      <hr class="line" />
+    </div>
+  
+  
+    <div class="form-container mt-3">
+      <label for="selectInventario" class="select-label">Seleccione un inventario:</label>
+      <select id="selectInventario" class="form-control" [(ngModel)]="inventarioSeleccionado">
+        <option value="">Seleccione un inventario</option>
+        <option *ngFor="let inventario of inventarios" [ngValue]="inventario">{{ inventario.nombre }}</option>
+      </select>
+    </div>
+  
+    <div class="button-container">
+      <button class="btn btn-primary" (click)="downloadPdfInventario()" [disabled]="!inventarioSeleccionado">Descargar PDF Inventario seleccionado</button>
+    </div>
+  </div>
+  

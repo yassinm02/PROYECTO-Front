@@ -1,4 +1,5 @@
-import { Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Product } from 'src/app/model/product.model';
 import { Provider } from 'src/app/model/provider.model';
@@ -14,6 +15,8 @@ import { TaxTypeService } from 'src/app/service/tax-type.service';
 })
 export class EditDialogComponent implements OnInit {
 
+  productForm: FormGroup;
+  submitted = false;
   editedProduct: Product;
   providers: Provider[];
   taxTypes: TaxType[];
@@ -21,12 +24,24 @@ export class EditDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public product: Product,
+    private formBuilder: FormBuilder,
     private productService: ProductsService,
-    private taxService: TaxTypeService,
+    private taxTypeService: TaxTypeService,
     private providerService: ProviderService
   ) {
-
     this.editedProduct = { ...product };
+
+    this.productForm = this.formBuilder.group({
+      name: [product.name, Validators.required],
+      descripcion: [product.descripcion, Validators.required],
+      marca: [product.marca],
+      cantidad: [product.cantidad, [Validators.required, Validators.min(0)]],
+      estado: [product.estado, Validators.required],
+      precioBase: [product.precioBase, [Validators.required, Validators.min(0)]],
+      tipoIva: [product.tipoIva, Validators.required],
+      proveedor: [product.proveedor, Validators.required],
+      codBarras: [product.codBarras, [Validators.required, Validators.minLength(8)]]
+    });
   }
 
   ngOnInit(): void {
@@ -46,7 +61,7 @@ export class EditDialogComponent implements OnInit {
   }
 
   loadTaxTypes(): void {
-    this.taxService.get().subscribe(
+    this.taxTypeService.get().subscribe(
       (taxTypes: TaxType[]) => {
         this.taxTypes = taxTypes;
       },
@@ -57,9 +72,31 @@ export class EditDialogComponent implements OnInit {
   }
 
   saveProduct(): void {
-    if (this.editedProduct.name && this.editedProduct.descripcion && this.editedProduct.proveedor && this.editedProduct.tipoIva) {
-      Object.assign(this.product, this.editedProduct);
-      this.dialogRef.close(this.product); // Close the dialog and pass the updated product
+    this.submitted = true;
+
+    if (this.productForm.invalid) {
+      return;
     }
+
+    const product: Product = this.productForm.value;
+    product.fechaCreacion = this.editedProduct.fechaCreacion;
+
+    this.productService.editProduct(this.editedProduct.id, product)
+      .subscribe(() => {
+      });
+      this.dialogRef.close();
   }
+
+  get f() {
+    return this.productForm.controls;
+  }
+
+  compareTaxTypes(taxType1: TaxType, taxType2: TaxType): boolean {
+    return taxType1 && taxType2 ? taxType1.id === taxType2.id : taxType1 === taxType2;
+  }
+  
+  compareProviders(provider1: Provider, provider2: Provider): boolean {
+    return provider1 && provider2 ? provider1.id === provider2.id : provider1 === provider2;
+  }
+  
 }

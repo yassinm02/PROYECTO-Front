@@ -1,0 +1,68 @@
+<div class="container">
+  <button class="btn btn-success boton mb-3" (click)="abrirDialogoCrearInventario()">Crear Inventario</button>
+  <div class="row">
+    <div class="col-md-6">
+      <label for="selectInventario">Seleccione un inventario:</label>
+      <select id="selectInventario" class="form-control" [(ngModel)]="inventarioSeleccionado" (change)="cargarPagina(0)">
+        <option value="">Seleccione un inventario</option>
+        <option *ngFor="let inventario of inventarios" [ngValue]="inventario">{{ inventario.nombre }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="cargandoActualizacion" class="loading-message alert alert-success">Cargando...</div>
+
+
+  <div class="row mt-4" *ngIf="inventarioSeleccionado || !cargandoActualizacion">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Fecha</th>
+            <th>Prod.</th>
+            <th>Cantidad</th>
+            <th></th>
+            <th>Revisado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventarioProductos">
+            <td>{{ item.inventario.fechaCreacion }}</td>
+            <td>{{ item.producto.name }}</td>
+            <input type="number" class="form-control border border-dark" [(ngModel)]="item.producto.cantidad" (change)="actualizarCantidad(item.producto.id,item.producto.cantidad)">
+            <td>
+              <button class="btn-primary btnico" (click)="opneInfoDialog(item.producto.id)"><mat-icon>info</mat-icon> </button>
+            </td>
+            <td>
+              <div class="container center">
+                <input type="checkbox" class="checkbox" [checked]="item.revisado" (change)="actualizarRevisadoL(item)" />
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="inventarioProductos.length === 0">
+            <td colspan="3">No hay productos en este inventario.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-4" *ngIf="inventarioProductos.length != 0">
+    <div class="col-md-12">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="{ disabled: paginaActual === 0 }">
+          <a class="page-link"  (click)="cargarPagina(0)">Primera</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: paginaActual === 0 }">
+          <a class="page-link" (click)="cargarPagina(paginaActual - 1)">Anterior</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: paginaActual === totalPages - 1 }">
+          <a class="page-link" (click)="cargarPagina(paginaActual + 1)">Siguiente</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: paginaActual === totalPages - 1 }">
+          <a class="page-link"  (click)="cargarPagina(totalPages - 1)">Última</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

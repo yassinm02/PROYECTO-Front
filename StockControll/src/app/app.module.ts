@@ -19,10 +19,19 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 import { EditDialogComponent } from './components/dialogs/edit-dialog/edit-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProvidersListComponent } from './components/providers/providers-list/providers-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { BarcodeDialogComponent } from './components/dialogs/barcode-dialog/barcode-dialog.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { InventarislistComponent } from './components/inventario/inventarislist/inventarislist.component';
+import { CreateinventaryComponent } from './components/dialogs/createinventary/createinventary.component';
+import { InventarioproductoComponent } from './components/inventario/inventarioproducto/inventarioproducto.component';
+import { InformesComponent } from './components/providers/informes/informes.component';
+import { saveAs } from 'file-saver';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +45,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     InfoDialogComponent,
     EditDialogComponent,
     ProvidersListComponent,
+    BarcodeDialogComponent,
+    InventarislistComponent,
+    CreateinventaryComponent,
+    InventarioproductoComponent,
+    InformesComponent,
     
   ],
   imports: [
@@ -53,8 +67,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReactiveFormsModule,
     MatInputModule,
     FlexLayoutModule,
+    MatTableModule,
+    ZXingScannerModule,
   ],
-  providers: [],
+  providers: [
+    { provide: 'saveAs', useValue: saveAs }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

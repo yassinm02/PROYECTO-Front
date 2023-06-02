@@ -10,17 +10,19 @@
           <mat-card-subtitle>{{ provider.address }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p><strong><mat-icon class="mr-1">contact_phone</mat-icon>Teléfono:</strong> {{ provider.phone }}</p>
-          <p><strong><mat-icon class="mr-1">email</mat-icon>Email:</strong> {{ provider.email }}</p>
-          <p><strong><mat-icon class="mr-1">public</mat-icon>Sitio web:</strong> {{ provider.website }}</p>
-          <p><strong><mat-icon class="mr-1">visibility</mat-icon>Observaciones:</strong> {{ provider.observations }}</p>
+          <p class="provider-info"><strong><mat-icon class="mr-1">contact_phone</mat-icon>Teléfono:</strong> {{ provider.phone }}</p>
+          <p class="provider-info"><strong><mat-icon class="mr-1">email</mat-icon>Email:</strong> {{ provider.email }}</p>
+          <p class="provider-info"><strong><mat-icon class="mr-1">public</mat-icon>Sitio web:</strong> {{ provider.website }}</p>
+          <p class="provider-info"><strong><mat-icon class="mr-1">visibility</mat-icon>Observaciones:</strong> {{ provider.observations }}</p>
         </mat-card-content>
         <mat-card-actions>
           <button class="btn-primary btnico">
             <mat-icon>edit</mat-icon>
+            Editar
           </button>
           <button class="btn-danger btnico" (click)="deleteprovider(provider.id)">
             <mat-icon>delete_forever</mat-icon>
+            Eliminar
           </button>
         </mat-card-actions>
       </mat-card>

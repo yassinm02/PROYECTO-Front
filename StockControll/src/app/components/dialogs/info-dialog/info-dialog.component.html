@@ -13,8 +13,8 @@
   <p><strong>Proveedor:</strong> {{ product.proveedor.name }}</p>
   <p><strong>Imagen:</strong> {{ product.imagen }}</p>
   <p><strong>Código de Barras:</strong> {{ product.codBarras }}</p>
-  <div class="container-center p-10">
-    <img [src]="'https://barcodeapi.org/api/codabar/' + product.codBarras" alt="Código de barras" />
+  <div class="container-center p-10 barcode-container">
+    <img class="barcode-image" [src]="'https://barcodeapi.org/api/codabar/' + product.codBarras" alt="Código de barras" />
   </div>
 </div>
 <div mat-dialog-actions class="modal-footer">

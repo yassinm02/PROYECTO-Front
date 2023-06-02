@@ -33,9 +33,10 @@ export class ProductsService {
   }
 
   public editProduct(id: number, producto: Product): Observable<any> {
-    const url = this.productURL + "/" + id;
-    return this.httpClient.put(url, producto);
+    const url = `${this.productURL}/${id}`;
+    return this.httpClient.patch(this.productURL+"/edit/"+id, producto);
   }
+  
 
   createProduct(producto: Product): Observable<string> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -44,17 +45,26 @@ export class ProductsService {
         catchError(this.handleError)
       );
   }
+
   private handleError(error: any): Observable<never> {
     let errorMessage = 'Error al crear el producto';
     if (error.error instanceof ErrorEvent) {
-      // Error de cliente
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Error del servidor
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);
+  }
+
+  public getProductByBarcode(barcode: string): Observable<Product> {
+    const url = `${this.productURL}/barcode/${barcode}`;
+    return this.httpClient.get<Product>(url);
+  }
+  
+  public getProductById(id: number): Observable<Product> {
+    const url = `${this.productURL}/${id}`;
+    return this.httpClient.get<Product>(url);
   }
 
 }
