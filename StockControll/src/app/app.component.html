@@ -1,3 +1,5 @@
+
+<div *ngIf="isConnected">
 <app-header></app-header>
 
 <br>
@@ -7,3 +9,16 @@
 <br>
 
 <app-footer></app-footer>
+
+</div>
+
+<div *ngIf="!isConnected" class="error-container">
+    <div class="error-message">
+      <span class="material-icons error-icon">warning</span>
+      <h1 class="error-title">Error de conexión con el servidor</h1>
+      <p class="error-text">HTTP Error 404 - Recurso no encontrado</p>
+      <button class="reload-button" (click)="reloadPage()">Recargar</button>
+    </div>
+  </div>
+  
+  

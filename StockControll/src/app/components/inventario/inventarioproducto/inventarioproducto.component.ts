@@ -22,7 +22,8 @@ export class InventarioproductoComponent implements OnInit {
   totalPages = 0;
   pageSize = 10;
   product: Product;
-  cargandoActualizacion: boolean = false;
+  cargandoActualizacion = false;
+  errorMessage = '';
 
   constructor(
     private inventarioService: InventarioService,
@@ -41,7 +42,7 @@ export class InventarioproductoComponent implements OnInit {
         this.inventarios = response;
       },
       (error) => {
-        console.error('Error al obtener los inventarios:', error);
+        this.handleError('Error al obtener los inventarios: ' + error);
       }
     );
   }
@@ -49,7 +50,7 @@ export class InventarioproductoComponent implements OnInit {
   cargarPagina(page: number): void {
     this.cargandoActualizacion = true;
     this.paginaActual = page;
-    
+
     if (this.inventarioSeleccionado) {
       this.inventarioProductoService
         .obtenerProductosPorInventario(
@@ -61,10 +62,10 @@ export class InventarioproductoComponent implements OnInit {
           (response: any) => {
             this.inventarioProductos = response;
             this.totalPages = response.totalPages;
-            this.cargandoActualizacion = false; 
+            this.cargandoActualizacion = false;
           },
           (error) => {
-            console.log('Error al cargar la página', error);
+            this.handleError('Error al cargar la página: ' + error);
           }
         );
     } else {
@@ -77,7 +78,10 @@ export class InventarioproductoComponent implements OnInit {
     this.inventarioProductoService
       .actualizarRevisado(item.inventario.id, item.producto.id, item.revisado)
       .subscribe(
-        
+        () => {},
+        (error) => {
+          this.handleError('Error al actualizar el revisado: ' + error);
+        }
       );
   }
 
@@ -100,7 +104,7 @@ export class InventarioproductoComponent implements OnInit {
             console.log('Inventario guardado:', inventarioGuardado);
           },
           (error) => {
-            console.error('Error al guardar el inventario:', error);
+            this.handleError('Error al guardar el inventario: ' + error);
           }
         );
       }
@@ -108,19 +112,38 @@ export class InventarioproductoComponent implements OnInit {
   }
 
   opneInfoDialog(id: number): void {
-    this.productService.getProductById(id).subscribe((data) => {
-      this.dialog.open(InfoDialogComponent, {
-        data: data,
-      });
-    });
+    this.productService.getProductById(id).subscribe(
+      (data) => {
+        this.dialog.open(InfoDialogComponent, {
+          data: data,
+        });
+      },
+      (error) => {
+        this.handleError('Error al obtener la información del producto: ' + error);
+      }
+    );
   }
 
   actualizarCantidad(id: number, cant: number): void {
-    this.productService.getProductById(id).subscribe((data) => {
-      data.cantidad = cant;
-      this.productService.editProduct(id, data).subscribe(() => {
-        console.log('Cantidad actualizada');
-      });
-    });
+    this.productService.getProductById(id).subscribe(
+      (data) => {
+        data.cantidad = cant;
+        this.productService.editProduct(id, data).subscribe(
+          () => {
+            console.log('Cantidad actualizada');
+          },
+          (error) => {
+            this.handleError('Error al actualizar la cantidad del producto: ' + error);
+          }
+        );
+      },
+      (error) => {
+        this.handleError('Error al obtener la información del producto: ' + error);
+      }
+    );
+  }
+
+  handleError(errorMessage: string): void {
+    this.errorMessage = errorMessage;
   }
 }
