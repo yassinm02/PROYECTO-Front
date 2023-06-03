@@ -5,6 +5,7 @@ import { ListComponent } from './components/products/list/list.component';
 import { ProvidersListComponent } from './components/providers/providers-list/providers-list.component';
 import { InventarioproductoComponent } from './components/inventario/inventarioproducto/inventarioproducto.component';
 import { InformesComponent } from './components/providers/informes/informes.component';
+import { ProductdetailsComponent } from './components/products/productdetails/productdetails.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: "informes",
     component: InformesComponent
+  },
+  {
+    path: "productos/:id",
+    component: ProductdetailsComponent
   }
 ];
 

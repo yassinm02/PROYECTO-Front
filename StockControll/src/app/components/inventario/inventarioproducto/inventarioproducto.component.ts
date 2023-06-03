@@ -23,7 +23,6 @@ export class InventarioproductoComponent implements OnInit {
   pageSize = 10;
   product: Product;
   cargandoActualizacion = false;
-  errorMessage = '';
 
   constructor(
     private inventarioService: InventarioService,
@@ -144,6 +143,6 @@ export class InventarioproductoComponent implements OnInit {
   }
 
   handleError(errorMessage: string): void {
-    this.errorMessage = errorMessage;
+console.log(errorMessage);
   }
 }

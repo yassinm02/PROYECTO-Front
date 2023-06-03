@@ -31,6 +31,8 @@ import { CreateinventaryComponent } from './components/dialogs/createinventary/c
 import { InventarioproductoComponent } from './components/inventario/inventarioproducto/inventarioproducto.component';
 import { InformesComponent } from './components/providers/informes/informes.component';
 import { saveAs } from 'file-saver';
+import { CommonModule } from '@angular/common';
+import { ProductdetailsComponent } from './components/products/productdetails/productdetails.component';
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { saveAs } from 'file-saver';
     CreateinventaryComponent,
     InventarioproductoComponent,
     InformesComponent,
+    ProductdetailsComponent,
     
   ],
   imports: [
@@ -69,6 +72,7 @@ import { saveAs } from 'file-saver';
     FlexLayoutModule,
     MatTableModule,
     ZXingScannerModule,
+    CommonModule
   ],
   providers: [
     { provide: 'saveAs', useValue: saveAs }
