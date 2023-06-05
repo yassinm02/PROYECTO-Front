@@ -43,7 +43,7 @@ export class InformesComponent implements OnInit {
   
     this.http.get(`http://192.168.0.17:8085/inventario-producto/pdf/${this.inventarioSeleccionado.id}`, { responseType: 'blob' })
       .subscribe((response: Blob) => {
-        saveAs(response, 'inventarios.pdf');
+        saveAs(response, "inventario_" + this.inventarioSeleccionado.nombre+ ".pdf");
       });
   }
   

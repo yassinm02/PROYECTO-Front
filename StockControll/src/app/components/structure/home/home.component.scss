@@ -2,4 +2,62 @@
     background-color: #323232;
     border-color: #323232;
     color: #DDD0C8;
+    transition: background-color 0.3s;
+  }
+
+  .color-text {
+    color: #323232;
+  }
+  
+  .button-color:hover {
+    background-color: #222222;
+  }
+  
+  .title-color {
+    font-size: 20px;
+    transition: font-size 0.3s;
+  }
+  
+  @media (min-width: 576px) {
+    .text-color {
+      font-size: 16px;
+      color: #323232;
+    }
+    
+    .title-color {
+      font-size: 24px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .text-color {
+      font-size: 18px;
+      color: #323232;
+    }
+    
+    .title-color {
+      font-size: 26px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .text-color {
+      font-size: 20px;
+      color: #323232;
+    }
+    
+    .title-color {
+      font-size: 28px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .text-color {
+      font-size: 22px;
+      color: #323232;
+    }
+    
+    .title-color {
+      font-size: 30px;
+    }
   }
