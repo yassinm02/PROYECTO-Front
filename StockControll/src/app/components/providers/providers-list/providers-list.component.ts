@@ -5,6 +5,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
+import { EDITPROVIDERComponent } from '../editprovider/editprovider.component';
 
 @Component({
   selector: 'app-providers-list',
@@ -40,19 +41,28 @@ export class ProvidersListComponent {
     }
   }
 
-  deleteprovider( id: number){
+  editProvider(proveedor : Provider){
     this.dialog
+    .open(EDITPROVIDERComponent, {
+      data: proveedor
+    })
+  }
+
+  deleteprovider(id: number): void {
+  this.dialog
     .open(ConfirmationDialogComponent, {
-      data: "Seguro que deseja borrar el proveedor con id: " + id + "?",
+      data: "¿Seguro que desea borrar el proveedor con ID: " + id + "?",
     })
     .afterClosed()
-    .subscribe((confirmado: Boolean) => {
+    .subscribe((confirmado: boolean) => {
       if (confirmado) {
-        this.providerService.deleteByid(id).subscribe(() => {
+        this.providerService.deleteByid(id).subscribe({
+        
         });
-        window.location.reload();
       }
     });
-  }
+    this.getProviders();
+
+}
   
 }

@@ -19,7 +19,7 @@ export class InventarioproductoComponent implements OnInit {
   inventarioSeleccionado: InventarioModel;
   inventarioProductos: InventarioproductosModel[] = [];
   paginaActual = 0;
-  totalPages = 0;
+  totalPages : number[] = [];
   pageSize = 10;
   product: Product;
   cargandoActualizacion = false;
@@ -46,6 +46,7 @@ export class InventarioproductoComponent implements OnInit {
     );
   }
 
+  /*
   cargarPagina(page: number): void {
     this.cargandoActualizacion = true;
     this.paginaActual = page;
@@ -72,6 +73,7 @@ export class InventarioproductoComponent implements OnInit {
       this.totalPages = 0;
     }
   }
+  */
 
   actualizarRevisadoL(item: InventarioproductosModel): void {
     this.inventarioProductoService
@@ -144,5 +146,26 @@ export class InventarioproductoComponent implements OnInit {
 
   handleError(errorMessage: string): void {
 console.log(errorMessage);
+  }
+
+  cargarPagina(page: number): void {
+    this.cargandoActualizacion = true;
+    this.paginaActual = page;
+
+    this.inventarioProductoService
+        .obtenerProductosPorInventario(
+          this.inventarioSeleccionado.id,
+          this.paginaActual,
+          this.pageSize,
+        ).subscribe(
+      (response: any) => {
+        this.inventarioProductos = response.content;
+        this.totalPages =  Array.from({length: response.totalPages}, (_, i) => i);
+        this.cargandoActualizacion = false;
+      },
+      (error) => {
+        console.error('Error al cargar la página:', error);
+      }
+    );
   }
 }

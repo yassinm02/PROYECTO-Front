@@ -1,10 +1,11 @@
-<h2 mat-dialog-title>Crear Inventario</h2>
-<div mat-dialog-content>
+<div mat-dialog-content class="dialog-content">
+<h2 mat-dialog-title class="dialog-content">Crear Inventario</h2>
+
   <mat-form-field>
     <input matInput placeholder="Nombre del inventario" [(ngModel)]="nombreInventario">
   </mat-form-field>
 </div>
-<div mat-dialog-actions align="end">
-  <button mat-button class="btn btn-danger" (click)="cancelar()">Cancelar</button>
-  <button mat-button class="btn btn-secondary"  (click)="guardar()">Guardar</button>
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button class="btn btn-cancel m-2" (click)="cancelar()">Cancelar</button>
+  <button mat-button class="btn btn-save m-2" (click)="guardar()">Guardar</button>
 </div>

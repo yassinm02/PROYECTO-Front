@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent } from '../../dialogs/confirmation-dialog/c
 import { InfoDialogComponent } from '../../dialogs/info-dialog/info-dialog.component';
 import { EditDialogComponent } from '../../dialogs/edit-dialog/edit-dialog.component';
 import { NewComponent } from '../new/new.component';
+import { concatMap, finalize, of } from 'rxjs';
 
 
 @Component({
@@ -44,17 +45,24 @@ export class ListComponent implements OnInit {
 
   deleteProduct(id: number): void {
     this.dialog
-    .open(ConfirmationDialogComponent, {
-      data: "Seguro que deseja borrar el producto con id: " + id + "?",
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-        this.productService.deleteById(id).subscribe(() => {
-        });
-        window.location.reload();
-      }
-    });
+      .open(ConfirmationDialogComponent, {
+        data: "¿Seguro que desea borrar el producto con id: " + id + "?",
+      })
+      .afterClosed()
+      .pipe(
+        concatMap((confirmado: boolean) => {
+          if (confirmado) {
+            return this.productService.deleteById(id);
+          } else {
+            return of();
+          }
+        }),
+        finalize(() => {
+          this.getProducts();
+        })
+      )
+      .subscribe(() => {
+      });
   }
 
   editProduct(product: Product): void {
@@ -89,7 +97,13 @@ export class ListComponent implements OnInit {
   }
 
   addProduct(){
-    this.dialog.open(NewComponent, {});
+    this.dialog.open(NewComponent, {}).afterClosed().subscribe((result:boolean) => {
+
+      if(result) {
+        alert("Producto creado!");
+      }
+
+    });
   }
 
 }

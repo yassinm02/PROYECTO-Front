@@ -5,6 +5,9 @@
     padding: 12px 16px;
     font-size: 12px;
     cursor: pointer;
+    flex-shrink: 0;
+  max-width: 30px;
+  padding: 6px;
   }
   
   .btnico:hover {
@@ -21,6 +24,10 @@
     justify-content: flex-end;
     align-items: center;
     margin-top: 20px;
+  }
+
+  .btnico mat-icon {
+    font-size: 18px;
   }
   
   .pagination-container select {

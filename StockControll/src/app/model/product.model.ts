@@ -2,7 +2,6 @@ import { Provider } from "./provider.model";
 import { TaxType } from "./taxType.model";
 
 export interface Product {
-
     id : number; 
     name : string;
     descripcion : string; 
@@ -16,3 +15,6 @@ export interface Product {
     imagen : string ; 
     codBarras : string;
 }
+
+
+

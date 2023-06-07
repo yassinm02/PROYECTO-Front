@@ -16,7 +16,7 @@
           <p class="provider-info"><strong><mat-icon class="mr-1">visibility</mat-icon>Observaciones:</strong> {{ provider.observations }}</p>
         </mat-card-content>
         <mat-card-actions>
-          <button class="btn-primary btnico">
+          <button class="btn-primary btnico" (click)="editProvider(provider)">
             <mat-icon>edit</mat-icon>
             Editar
           </button>

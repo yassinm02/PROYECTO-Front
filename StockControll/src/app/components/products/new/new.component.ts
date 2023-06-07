@@ -69,16 +69,14 @@ export class NewComponent implements OnInit {
     const product: Product = this.productForm.value;
     this.productService.createProduct(product).subscribe(
       () => {
-        this.dialogRef.close();
-      },
-      (error) => {
-        console.error('Error al crear el producto:', error);
       }
     );
+    this.dialogRef.close(true);
+
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   get f() {

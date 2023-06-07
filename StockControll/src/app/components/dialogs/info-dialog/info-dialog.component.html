@@ -11,7 +11,6 @@
   <p><strong>Tipo de IVA:</strong> {{ product.tipoIva.name }}</p>
   <p><strong>Fecha de Creación:</strong> {{ product.fechaCreacion }}</p>
   <p><strong>Proveedor:</strong> {{ product.proveedor.name }}</p>
-  <p><strong>Imagen:</strong> {{ product.imagen }}</p>
   <p><strong>Código de Barras:</strong> {{ product.codBarras }}</p>
   <div class="container-center p-10 barcode-container">
     <img class="barcode-image" [src]="'https://barcodeapi.org/api/codabar/' + product.codBarras" alt="Código de barras" />

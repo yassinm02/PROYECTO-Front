@@ -30,9 +30,9 @@ import { InventarislistComponent } from './components/inventario/inventarislist/
 import { CreateinventaryComponent } from './components/dialogs/createinventary/createinventary.component';
 import { InventarioproductoComponent } from './components/inventario/inventarioproducto/inventarioproducto.component';
 import { InformesComponent } from './components/providers/informes/informes.component';
-import { saveAs } from 'file-saver';
 import { CommonModule } from '@angular/common';
 import { ProductdetailsComponent } from './components/products/productdetails/productdetails.component';
+import { EDITPROVIDERComponent } from './components/providers/editprovider/editprovider.component';
 
 
 @NgModule({
@@ -53,6 +53,7 @@ import { ProductdetailsComponent } from './components/products/productdetails/pr
     InventarioproductoComponent,
     InformesComponent,
     ProductdetailsComponent,
+    EDITPROVIDERComponent,
     
   ],
   imports: [
@@ -75,7 +76,6 @@ import { ProductdetailsComponent } from './components/products/productdetails/pr
     CommonModule
   ],
   providers: [
-    { provide: 'saveAs', useValue: saveAs }
   ],
   bootstrap: [AppComponent]
 })

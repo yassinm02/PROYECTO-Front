@@ -23,5 +23,9 @@ export class ProviderService {
   deleteByid(id: number): Observable<HttpResponse<any>> {
     return this.httpClient.delete<any>(this.proveedorURL+"/"+id);
   }
+  editProveedor(provider: Provider): Observable<any> {
+    const url = `${this.proveedorURL}/${provider.id}`;
+    return this.httpClient.put(url, provider);
+  }
 
 }
